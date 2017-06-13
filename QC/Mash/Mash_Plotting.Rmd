@@ -1,0 +1,50 @@
+---
+title: "Mash Plotting"
+author: "John D."
+date: "June 13, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Using mash to find similarity between genome assemblies
+
+```{r}
+library(tidyverse)
+
+## Read in files
+
+Assemblies_vs_Reference <- read.table("Assembly_vs_Reference_Mash_Dists.tab", header = F) %>%
+  rename(Reference = V1, Query = V2, Dist = V3, P_value = V4 , Matches = V5)
+Reference <- read.table("Reference_Mash_Dists.tab", header = F) %>%
+  rename(Reference = V1, Query = V2, Dist = V3, P_value = V4 , Matches = V5)
+Assemblies <- read.table("Assembly_Mash_Dists.tab", header = F) %>%
+  rename(Reference = V1, Query = V2, Dist = V3, P_value = V4 , Matches = V5)
+
+Assemblies_vs_Reference %>%
+  ggplot(aes(Query,Reference)) +
+  geom_tile(aes(fill = Dist)) +
+  geom_text(aes(label = round(Dist,4), colour = "red"),show.legend = F) +
+  scale_colour_manual(values=c("red")) +
+  ggtitle("Mash Distances") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+Reference %>%
+  ggplot(aes(Query,Reference)) +
+  geom_tile(aes(fill = Dist)) +
+  geom_text(aes(label = round(Dist,4), colour = "red"),show.legend = F) +
+  scale_colour_manual(values=c("red")) +
+  ggtitle("Mash Distances") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+Assemblies %>%
+  ggplot(aes(Query,Reference)) +
+  geom_tile(aes(fill = Dist)) +
+  geom_text(aes(label = round(Dist,4), colour = "red"),show.legend = F) +
+  scale_colour_manual(values=c("red")) +
+  ggtitle("Mash Distances") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+

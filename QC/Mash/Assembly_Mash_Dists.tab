@@ -1,0 +1,16 @@
+Davis_1_pseudohap.fa	Davis_1_pseudohap.fa	0	0	1000/1000
+Davis_2_pseudohap.fa	Davis_1_pseudohap.fa	0.0024636	0	904/1000
+Novogene_1_pseudohap.fa	Davis_1_pseudohap.fa	0.00265838	0	897/1000
+Novogene_2_pseudohap.fa	Davis_1_pseudohap.fa	0.00240836	0	906/1000
+Davis_1_pseudohap.fa	Davis_2_pseudohap.fa	0.0024636	0	904/1000
+Davis_2_pseudohap.fa	Davis_2_pseudohap.fa	0	0	1000/1000
+Novogene_1_pseudohap.fa	Davis_2_pseudohap.fa	0.00238081	0	907/1000
+Novogene_2_pseudohap.fa	Davis_2_pseudohap.fa	0.0023533	0	908/1000
+Davis_1_pseudohap.fa	Novogene_1_pseudohap.fa	0.00265838	0	897/1000
+Davis_2_pseudohap.fa	Novogene_1_pseudohap.fa	0.00238081	0	907/1000
+Novogene_1_pseudohap.fa	Novogene_1_pseudohap.fa	0	0	1000/1000
+Novogene_2_pseudohap.fa	Novogene_1_pseudohap.fa	0.00221642	0	913/1000
+Davis_1_pseudohap.fa	Novogene_2_pseudohap.fa	0.00240836	0	906/1000
+Davis_2_pseudohap.fa	Novogene_2_pseudohap.fa	0.0023533	0	908/1000
+Novogene_1_pseudohap.fa	Novogene_2_pseudohap.fa	0.00221642	0	913/1000
+Novogene_2_pseudohap.fa	Novogene_2_pseudohap.fa	0	0	1000/1000
