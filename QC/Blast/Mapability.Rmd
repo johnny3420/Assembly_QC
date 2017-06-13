@@ -1,0 +1,159 @@
+---
+title: "Map_back"
+author: "John D."
+date: "June 8, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+```
+
+### Examining ability to map to References
+
+Both assemblies and references broken up so N50 = 25kb
+
+#### Number of contigs
+
+
+Davis_1 = 100085
+Davis_2 = 100355
+Novogene_1 = 102163
+Novogene_2 = 101635
+Bnapus_A = 9377
+Bnapus_C = 15667
+Brapa_A = 13227
+Boleracea_C = 15407
+
+```{r}
+sample.names <- c("Davis_1","Davis_2","Novogene_1","Novogene_2","B.Napus_A","B.Napus_C","B.Rapa_A","B.Oleracea_C")
+contig.number <- c(100085,100355,102163,101635,9377,15667,13227,15407)
+```
+
+
+
+```{r}
+## Quick file load and editing
+quickload <- function(ref){
+  cnames <- c("qseqid","sseqid", "pident", "length", "mismatch","gapopen","qstart","qend","sstart","send","evaule","bitscore")
+D1 <- read.delim(paste0("Assembly_Blast/",ref,"_25kb_Davis_1_pseudohap.blast6"), header = F, col.names = cnames)
+D2 <- read.delim(paste0("Assembly_Blast/",ref,"_25kb_Davis_2_pseudohap.blast6"), header = F, col.names = cnames)
+N1 <- read.delim(paste0("Assembly_Blast/",ref,"_25kb_Novogene_1_pseudohap.blast6"), header = F, col.names = cnames)
+N2 <- read.delim(paste0("Assembly_Blast/",ref,"_25kb_Novogene_1_pseudohap.blast6"), header = F, col.names = cnames)
+BnA <- read.delim(paste0("Reference_Blast/",ref,"_25kb_B.napus_A.blast6"), header = F, col.names = cnames)
+BnC <- read.delim(paste0("Reference_Blast/",ref,"_25kb_B.napus_C.blast6"), header = F, col.names = cnames)
+BrA <- read.delim(paste0("Reference_Blast/",ref,"_25kb_B.rapa_A.blast6"), header = F, col.names = cnames)
+BoC <- read.delim(paste0("Reference_Blast/",ref,"_25kb_B.oleracea_C.blast6"), header = F, col.names = cnames)
+all <- list(D1,D2,N1,N2,BnA,BnC,BrA,BoC)
+names(all) <- c("D1","D2","N1","N2","BnA","BnC","BrA","BoC")
+return(all)
+}
+
+## Get average stats
+quickmeanstat <- function(db, ref){
+  stats <- data.frame(Reference = ref, Sample = sample.names)
+  stats$pident <- sapply(db,function(x){mean(x$pident, na.rm = T)})
+  stats$length <- sapply(db,function(x){mean(x$length, na.rm = T)})
+  stats$mismatch <- sapply(db,function(x){mean(x$mismatch, na.rm = T)})
+  stats$bitscore <- sapply(db,function(x){mean(x$bitscore, na.rm = T)})
+  stats$num_aligned <- sapply(db,function(x){nrow(x)})
+  stats$input_seqs <- contig.number
+  stats$perc_aligned <- stats$num_aligned/stats$input_seqs
+  return(stats)
+}
+
+## Get median stats
+quickmedianstat <- function(db, ref){
+  stats <- data.frame(Reference = ref, Sample = sample.names)
+  stats$pident <- sapply(db,function(x){mean(x$pident, na.rm = T)})
+  stats$length <- sapply(db,function(x){mean(x$length, na.rm = T)})
+  stats$mismatch <- sapply(db,function(x){mean(x$mismatch, na.rm = T)})
+  stats$bitscore <- sapply(db,function(x){mean(x$bitscore, na.rm = T)})
+  stats$num_aligned <- sapply(db,function(x){nrow(x)})
+  stats$input_seqs <- contig.number
+  stats$perc_aligned <- stats$num_aligned/stats$input_seqs
+  return(stats)
+}
+```
+
+
+## Aligning to B napus A subgenome
+
+```{r}
+ref <- "B.Napus_A"
+db <- quickload(ref)
+#mean stats
+BnA.mean.stats <- quickmeanstat(db, ref)
+#median stats
+BnA.median.stats <- quickmedianstat(db, ref)
+
+BnA.mean.stats
+BnA.median.stats
+```
+
+## Aligning to B napus C subgenome
+
+```{r}
+ref <- "B.Napus_C"
+db <- quickload(ref)
+#mean stats
+BnC.mean.stats <- quickmeanstat(db, ref)
+#median stats
+BnC.median.stats <- quickmedianstat(db, ref)
+
+BnC.mean.stats
+BnC.median.stats
+```
+
+## Aligning to B napus AC genome
+
+```{r}
+ref <- "B.Napus_AC"
+db <- quickload(ref)
+#mean stats
+BnAC.mean.stats <- quickmeanstat(db, ref)
+#median stats
+BnAC.median.stats <- quickmedianstat(db, ref)
+
+BnAC.mean.stats
+BnAC.median.stats
+```
+
+## Aligning to B rapa A genome
+
+```{r}
+ref <- "B.Rapa_A"
+db <- quickload(ref)
+#mean stats
+BrA.mean.stats <- quickmeanstat(db, ref)
+#median stats
+BrA.median.stats <- quickmedianstat(db, ref)
+
+BrA.mean.stats
+BrA.median.stats
+```
+
+## Aligning to B oleracea C genome
+
+```{r}
+ref <- "B.Oleracea_C"
+db <- quickload(ref)
+#mean stats
+BoC.mean.stats <- quickmeanstat(db, ref)
+#median stats
+BoC.median.stats <- quickmedianstat(db, ref)
+
+BoC.mean.stats
+BoC.median.stats
+```
+
+## Combine all together
+
+```{r}
+allmean <- grep("^B.*mean",ls(), value = T)
+allmedian <- grep("^B.*median",ls(), value = T)
+a <- mget(allmean, inherits = T)
+b <- rbind(a[[1]],a[[2]],a[[3]],a[[4]],a[[5]])
+```
+
