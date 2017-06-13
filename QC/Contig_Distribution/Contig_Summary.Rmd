@@ -1,0 +1,40 @@
+---
+title: "Contig_Distribution"
+author: "John D."
+date: "June 13, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+Look at distribution of contigs
+
+```{r}
+###
+D1 <- read.table("Davis_1_contig_sizes.txt",col.names = c("Contig","Length"))
+
+summary(D1$Length)
+###
+
+D2 <- read.table("Davis_2_contig_sizes.txt",col.names = c("Contig","Length"))
+
+summary(D2$Length)
+###
+
+N1 <- read.table("Novogene_1_contig_sizes.txt",col.names = c("Contig","Length"))
+
+summary(N1$Length)
+###
+
+N2 <- read.table("Novogene_2_contig_sizes.txt",col.names = c("Contig","Length"))
+
+summary(N2$Length)
+###
+```
+
